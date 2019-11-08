@@ -6,7 +6,8 @@
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	std::cout << "Welcome to Fly like a Phoenix" << std::endl;
+	std::cout << "Here, we solve all you flying needs" << std::endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
