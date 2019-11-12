@@ -28,6 +28,63 @@ void Route::addFlight(Flight * flight)
 
 }
 
+void Route::DFS(Airport * src)
+{
+	//create bool array to keep track of visited nodes
+	//thanks GeeksforGeeks for the idea!
+	bool* visited = new bool[airports.size()];
+
+	for (int i = 0; i < airports.size(); i++) {
+		visited[i] = false;
+	}
+	
+	//do a depth first search on that source.
+	depthFirstSearch(src, visited);
+
+	int indexofunvisited = -1;
+	do {
+		//see if there are any other nodes that need to be visited
+		for (int i = 0; i < totalAirports; i++) {
+			if (visited[i] == false) {
+				indexofunvisited = i;
+				break;
+			}
+			else {
+				indexofunvisited = -1;
+			}
+		}
+
+		//visit those nodes
+		if (indexofunvisited >= 0) {
+			Airport* a = &airports.at(indexofunvisited);
+			depthFirstSearch(a, visited);
+		}
+
+	} while (indexofunvisited >= 0);
+	
+}
+
+void Route::depthFirstSearch(Airport * airport, bool visited[])
+{
+	//view current node
+	std::cout << airport->airportName << " ";
+
+	//mark as visited
+	int srcIndex = findorAddAirportIndex(airport);
+
+	visited[srcIndex] = true;
+
+	//see if another node that is connected has been visited already or not
+	//find connected airport
+	//if not then visit that node
+	for (int i = 0; i < totalAirports; i++) {
+		if (flights[srcIndex][i].cost != NULL && visited[i] == false) {
+			depthFirstSearch(flights[srcIndex][i].dest, visited);
+		}
+	}
+
+}
+
 void Route::printNetwork()
 {
 	std::cout << "     ";

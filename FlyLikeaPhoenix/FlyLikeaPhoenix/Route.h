@@ -28,6 +28,7 @@ private:
 	int totalAirports;
 
 	int findorAddAirportIndex(Airport* airport);
+	void depthFirstSearch(Airport *airport, bool visited[]);
 
 
 	

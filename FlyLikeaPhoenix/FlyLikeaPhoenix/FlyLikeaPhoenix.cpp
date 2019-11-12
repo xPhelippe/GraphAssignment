@@ -40,6 +40,9 @@ int main()
 	flightRoutes->addFlight(new Flight(airports[3], airports[7], 278, 173, 1716));
 
 	flightRoutes->printNetwork();
+	std::cout << endl;
+	flightRoutes->DFS(airports[5]);
+	std::cout << endl;
 
 }
 
