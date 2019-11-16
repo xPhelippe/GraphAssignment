@@ -3,9 +3,7 @@
 
 
 #include "pch.h"
-#include <iostream>
 #include "Route.h"
-#include "Airport.h"
 
 int main()
 {
@@ -13,7 +11,6 @@ int main()
 	Route* flightRoutes = new Route(10);
 
 	Airport* airports[10];
-
 
 	airports[0] = new Airport(0, "MCO");
 	airports[1] = new Airport(1, "ATL");
@@ -41,8 +38,11 @@ int main()
 
 	flightRoutes->printNetwork();
 	std::cout << endl;
-	flightRoutes->DFS(airports[5]);
+	flightRoutes->DFS(airports[3]);
 	std::cout << endl;
+
+	cout << "Fastest path from " << airports[0]->airportName << " to " << airports[1]->airportName << endl;
+	flightRoutes->determineFastestFlight(airports[0], airports[9]);
 
 }
 

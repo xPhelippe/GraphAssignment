@@ -26,7 +26,7 @@ struct Airport {
 	bool operator == (Airport const & a) {
 		bool result = false;
 
-		if (id == a.id && airportName == a.airportName && minutes == a.minutes && cost == a.cost && distance == a.distance) {
+		if (id == a.id && airportName == a.airportName) {
 			result = true;
 		}
 
