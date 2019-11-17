@@ -2,6 +2,9 @@
 #define compare_time
 #include"Airport.h"
 
+
+//these comparator objects are used to compare items in the priority queue
+
 struct CompareTime {
 
 	bool operator()(std::pair<Airport, string> &a1, std::pair<Airport, string> &a2) {
