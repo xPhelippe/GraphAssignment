@@ -152,7 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Airport.h" />
-    <ClInclude Include="CompareTime.h" />
+    <ClInclude Include="Compare.h" />
     <ClInclude Include="Flight.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Route.h" />

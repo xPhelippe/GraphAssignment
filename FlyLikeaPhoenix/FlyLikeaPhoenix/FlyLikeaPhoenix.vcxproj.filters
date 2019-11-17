@@ -27,7 +27,7 @@
     <ClInclude Include="Route.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CompareTime.h">
+    <ClInclude Include="Compare.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

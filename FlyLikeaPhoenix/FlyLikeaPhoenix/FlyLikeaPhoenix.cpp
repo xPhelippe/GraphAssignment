@@ -41,8 +41,17 @@ int main()
 	flightRoutes->DFS(airports[3]);
 	std::cout << endl;
 
+	cout << "Shortest path from " << airports[0]->airportName << " to " << airports[9]->airportName << endl;
+	flightRoutes->determineShortestPath(airports[0], airports[9]);
+
 	cout << "Fastest path from " << airports[0]->airportName << " to " << airports[1]->airportName << endl;
 	flightRoutes->determineFastestFlight(airports[0], airports[9]);
+
+	cout << "Lowest cost from " << airports[0]->airportName << " to " << airports[9]->airportName << endl;
+	flightRoutes->determineLowestCostFlight(airports[0], airports[9]);
+
+	cout << "Shortest distance from " << airports[0]->airportName << " to " << airports[9]->airportName << endl;
+	flightRoutes->determineShortestDistanceFlight(airports[0], airports[9]);
 
 }
 

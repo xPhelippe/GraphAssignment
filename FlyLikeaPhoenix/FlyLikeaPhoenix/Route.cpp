@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Route.h"
-#include "CompareTime.h"
+#include "Compare.h"
 #include <iostream>
 #include <queue>
 #include <string>
@@ -67,6 +67,108 @@ void Route::DFS(Airport * src)
 
 	} while (indexofunvisited >= 0);
 	
+}
+
+void Route::determineShortestPath(Airport * src, Airport * dest)
+{
+	//here we do dijkstras algorithm hehehe
+
+	int inf = std::numeric_limits<int>::max();
+
+	//first I need to set the time of all airports to infinity
+	for (int i = 0; i < airports.size(); i++) {
+		airports.at(i).minutes = inf;
+	}
+
+	//now I nee to set the time of the source flight to 0
+
+	airports.at(findorAddAirportIndex(src)).minutes = 0;
+
+	//this priority queue contains a pair of int and string. The int will carry the value
+	//of the cost and the string will carry the path yielding that cost.
+	// the gretaer comparator turns the max pqueue into a min pqueue
+
+	priority_queue<std::pair<Airport, string>, vector<std::pair<Airport, string>>, CompareTime> pq;
+
+
+	//std::pair<Airport, string>, vector<Airport, string>, CompareTime
+
+	//to help me visualize the algorithm
+	std::cout << "CurrentAir ";
+
+	for (int i = 0; i < airports.size(); i++) {
+		std::cout << "       " << airports.at(i).airportName << " ";
+	}
+
+	std::cout << endl;
+
+
+	//add source airport to the front of the priority queue
+	pq.push(std::make_pair(airports.at(findorAddAirportIndex(src)), airports.at(findorAddAirportIndex(src)).airportName));
+
+	while (!pq.empty())
+	{
+		//grab the item at the beginning of the queue
+		std::pair<Airport, string> currentPair = pq.top();
+
+		Airport currentAir = currentPair.first;
+		pq.pop();
+
+		//see if the item is the destination. If so then we are done
+		if (currentAir == *dest) {
+			std::cout << endl;
+			std::cout << "Path: " << currentPair.second << endl;
+			std::cout << "Cost: " << currentAir.minutes << endl;
+			break;
+		}
+
+		//to help me visualize the algorithm
+		std::cout << "       " << currentAir.airportName << " ";
+
+		//find the index of the current airport
+		int index = findorAddAirportIndex(&currentAir);
+
+		//find all its neighbors. test to see if their new cost is less than their current cost.
+		for (int i = 0; i < airports.size(); i++) {
+
+			if (flights[index][i].cost) {//see if a flight exists
+
+				//now compare the new cost (vertex cost + edge cost) with the current cost to that airport
+				if (airports.at(i).minutes > airports.at(index).minutes + 1) {
+					//set the new cost
+					airports.at(i).minutes = airports.at(index).minutes + 1x;
+
+					pq.push(std::make_pair(airports.at(i), currentPair.second + " -> " + airports.at(i).airportName));
+				}
+
+			}
+
+		}
+
+		//to help me visualize the algorithm
+		for (int i = 0; i < airports.size(); i++) {
+			if (airports.at(i).minutes == inf) {
+				std::printf("%10s ", "inf");
+			}
+			else {
+				std::printf("%10d ", airports.at(i).minutes);
+			}
+		}
+		std::cout << endl;
+
+
+	}
+
+
+	//loop through queue
+		//grab the item at the beginning of the queue
+		//find all its neighbors. test to see if their new cost is less than their current cost.
+		//if so, add them to the pqueue
+		// when adding to the pqueue, append the airport's name to the current airport
+	//end loop
+
+	//output front of pqueue
+
 }
 
 void Route::determineFastestFlight(Airport * src, Airport * dest)
@@ -149,9 +251,223 @@ void Route::determineFastestFlight(Airport * src, Airport * dest)
 
 		//to help me visualize the algorithm
 		for (int i = 0; i < airports.size(); i++) {
-			std::printf("%10d ", airports.at(i).minutes);
+			if (airports.at(i).minutes == inf) {
+				std::printf("%10s ", "inf");
+			}
+			else {
+				std::printf("%10d ", airports.at(i).minutes);
+			}
 		}
-		
+		std::cout << endl;
+
+
+	}
+
+
+	//loop through queue
+		//grab the item at the beginning of the queue
+		//find all its neighbors. test to see if their new cost is less than their current cost.
+		//if so, add them to the pqueue
+		// when adding to the pqueue, append the airport's name to the current airport
+	//end loop
+
+	//output front of pqueue
+
+}
+
+void Route::determineLowestCostFlight(Airport * src, Airport * dest)
+{
+	//here we do dijkstras algorithm hehehe
+	//fastest flight is based off of time so I will be using the time of each flight to determine the 
+	//most efficient path
+
+	double inf = std::numeric_limits<double>::max();
+
+	//first I need to set the time of all airports to infinity
+	for (int i = 0; i < airports.size(); i++) {
+		airports.at(i).cost = inf;
+	}
+
+	//now I nee to set the time of the source flight to 0
+
+	airports.at(findorAddAirportIndex(src)).cost = 0;
+
+	//this priority queue contains a pair of int and string. The int will carry the value
+	//of the cost and the string will carry the path yielding that cost.
+	// the gretaer comparator turns the max pqueue into a min pqueue
+
+	priority_queue<std::pair<Airport, string>, vector<std::pair<Airport, string>>, CompareCost> pq;
+
+
+	//std::pair<Airport, string>, vector<Airport, string>, CompareTime
+
+	//to help me visualize the algorithm
+	std::cout << "CurrentAir ";
+
+	for (int i = 0; i < airports.size(); i++) {
+		std::cout << "       " << airports.at(i).airportName << " ";
+	}
+
+	std::cout << endl;
+
+
+	//add source airport to the front of the priority queue
+	pq.push(std::make_pair(airports.at(findorAddAirportIndex(src)), airports.at(findorAddAirportIndex(src)).airportName));
+
+	while (!pq.empty())
+	{
+		//grab the item at the beginning of the queue
+		std::pair<Airport, string> currentPair = pq.top();
+
+		Airport currentAir = currentPair.first;
+		pq.pop();
+
+		//see if the item is the destination. If so then we are done
+		if (currentAir == *dest) {
+			std::cout << endl;
+			std::cout << "Path: " << currentPair.second << endl;
+			std::cout << "Cost: " << currentAir.cost << endl;
+			break;
+		}
+
+		//to help me visualize the algorithm
+		std::cout << "       " << currentAir.airportName << " ";
+
+		//find the index of the current airport
+		int index = findorAddAirportIndex(&currentAir);
+
+		//find all its neighbors. test to see if their new cost is less than their current cost.
+		for (int i = 0; i < airports.size(); i++) {
+
+			if (flights[index][i].cost) {//see if a flight exists
+
+				//now compare the new cost (vertex cost + edge cost) with the current cost to that airport
+				if (airports.at(i).cost > airports.at(index).cost + flights[index][i].cost) {
+					//set the new cost
+					airports.at(i).cost = airports.at(index).cost + flights[index][i].cost;
+
+					pq.push(std::make_pair(airports.at(i), currentPair.second + " -> " + airports.at(i).airportName));
+				}
+
+			}
+
+		}
+
+		//to help me visualize the algorithm
+		for (int i = 0; i < airports.size(); i++) {
+			if (airports.at(i).cost == inf) {
+				std::printf("%10s ", "inf");
+			}
+			else {
+				std::printf("%10.2lf ", airports.at(i).cost);
+			}
+		}
+
+		std::cout << endl;
+
+
+	}
+
+
+	//loop through queue
+		//grab the item at the beginning of the queue
+		//find all its neighbors. test to see if their new cost is less than their current cost.
+		//if so, add them to the pqueue
+		// when adding to the pqueue, append the airport's name to the current airport
+	//end loop
+
+	//output front of pqueue
+
+}
+
+void Route::determineShortestDistanceFlight(Airport * src, Airport * dest)
+{
+	//here we do dijkstras algorithm hehehe
+	//fastest flight is based off of time so I will be using the time of each flight to determine the 
+	//most efficient path
+
+	double inf = std::numeric_limits<double>::max();
+
+	//first I need to set the time of all airports to infinity
+	for (int i = 0; i < airports.size(); i++) {
+		airports.at(i).distance = inf;
+	}
+
+	//now I nee to set the time of the source flight to 0
+
+	airports.at(findorAddAirportIndex(src)).distance = 0;
+
+	//this priority queue contains a pair of int and string. The int will carry the value
+	//of the cost and the string will carry the path yielding that cost.
+	// the gretaer comparator turns the max pqueue into a min pqueue
+
+	priority_queue<std::pair<Airport, string>, vector<std::pair<Airport, string>>, CompareDistance> pq;
+
+
+	//std::pair<Airport, string>, vector<Airport, string>, CompareTime
+
+	//to help me visualize the algorithm
+	std::cout << "CurrentAir ";
+
+	for (int i = 0; i < airports.size(); i++) {
+		std::cout << "       " << airports.at(i).airportName << " ";
+	}
+
+	std::cout << endl;
+
+
+	//add source airport to the front of the priority queue
+	pq.push(std::make_pair(airports.at(findorAddAirportIndex(src)), airports.at(findorAddAirportIndex(src)).airportName));
+
+	while (!pq.empty())
+	{
+		//grab the item at the beginning of the queue
+		std::pair<Airport, string> currentPair = pq.top();
+
+		Airport currentAir = currentPair.first;
+		pq.pop();
+
+		//see if the item is the destination. If so then we are done
+		if (currentAir == *dest) {
+			std::cout << endl;
+			std::cout << "Path: " << currentPair.second << endl;
+			std::cout << "Cost: " << currentAir.distance << endl;
+			break;
+		}
+
+		//to help me visualize the algorithm
+		std::cout << "       " << currentAir.airportName << " ";
+
+		//find the index of the current airport
+		int index = findorAddAirportIndex(&currentAir);
+
+		//find all its neighbors. test to see if their new cost is less than their current cost.
+		for (int i = 0; i < airports.size(); i++) {
+
+			if (flights[index][i].distance) {//see if a flight exists
+
+				//now compare the new cost (vertex cost + edge cost) with the current cost to that airport
+				if (airports.at(i).distance > airports.at(index).distance + flights[index][i].distance) {
+					//set the new cost
+					airports.at(i).distance = airports.at(index).distance + flights[index][i].distance;
+
+					pq.push(std::make_pair(airports.at(i), currentPair.second + " -> " + airports.at(i).airportName));
+				}
+
+			}
+
+		}
+
+		//to help me visualize the algorithm
+		for (int i = 0; i < airports.size(); i++) {
+			if (airports.at(i).distance == inf) {
+				std::printf("%10s ", "inf");
+			}
+			else {
+				std::printf("%10.2lf ", airports.at(i).distance);
+			}
+		}
+
 		std::cout << endl;
 
 
