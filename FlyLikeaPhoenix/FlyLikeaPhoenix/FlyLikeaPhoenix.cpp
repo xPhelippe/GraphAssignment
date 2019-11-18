@@ -7,6 +7,25 @@
 
 int main()
 {
+	/*
+	sources
+	
+	Gave me the idea of a boolean array for keeping track of visited nodes in DFS
+	https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/
+
+	how to create a dynamic 2d Array
+	https://stackoverflow.com/questions/936687/how-do-i-declare-a-2d-array-in-c-using-new
+
+	how to flip a pqueue from a max heap to a minheap
+	https://www.geeksforgeeks.org/priority-queue-of-pairs-in-c-ordered-by-first/
+
+	creating a priority queue of pairs
+	https://www.geeksforgeeks.org/priority-queue-of-pairs-in-c-ordered-by-first/
+	
+	general pqueue know-how
+	http://www.cplusplus.com/reference/queue/priority_queue/
+
+	*/
 
 	Route* flightRoutes = new Route(10);
 

@@ -90,7 +90,6 @@ void Route::determineShortestPath(Airport * src, Airport * dest)
 	//this priority queue contains a pair of Airport and string. 
 	//The airport is used for comparing weights and the string holds the path to that airport
 	// the gretaer comparator turns the max pqueue into a min pqueue
-
 	priority_queue<std::pair<Airport, string>, vector<std::pair<Airport, string>>, CompareTime> pq;
 
 	//to help me visualize the algorithm-----------------------------------
